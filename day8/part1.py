@@ -3,23 +3,18 @@ import re
 INPUT_FILE = "./input.txt"
 # INPUT_FILE = "./input_example.txt"
 
-INDEX = 1
 
-
-def parse_datas(datas):
-    global INDEX
+def generate_node(datas):
     node = {
-        "index": INDEX,
         "children": [],
         "nb_children": datas[0],
         "metadatas": [],
         "nb_metadatas": datas[1]
     }
-    INDEX += 1
 
     children_length = 2
     for n in range(node["nb_children"]):
-        child, length = parse_datas(datas[children_length:])
+        child, length = generate_node(datas[children_length:])
         children_length += length
         node["children"].append(child)
 
@@ -42,7 +37,7 @@ datas = [int(n)
          for n in re.findall("\d+", open(INPUT_FILE).read().rstrip('\n'))]
 
 
-root, _ = parse_datas(datas)
+root, _ = generate_node(datas)
 sum_metadatas = compute_metadatas_sum(root)
 
 print(sum_metadatas)
