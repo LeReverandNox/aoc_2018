@@ -84,11 +84,9 @@ for g in games:
     current_m = board_list.first
 
     for m in range(1, g["marbles"] + 1):
-        curr_player = (m % g["players"])
-
         if m % 23 == 0:
             next_m = board_list.getRelativeNodeByIndex(current_m, -7)
-            scores[curr_player] += (m + next_m.data)
+            scores[m % g["players"]] += (m + next_m.data)
             board_list.removeNode(next_m)
             next_m = next_m.next
         else:
